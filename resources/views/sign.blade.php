@@ -5,62 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <title>Iniciar Sesión - C.Store</title>
-    <style>
-        :root {
-            --primary-color: #ff6b35;
-            --secondary-color: #2EC4B6;
-            --accent-color: #FF9F1C;
-            --dark-color: #2D3047;
-            --light-color: #F8F9FA;
-        }
-        
-        .hero-section {
-            background: linear-gradient(rgba(45, 48, 71, 0.9), rgba(45, 48, 71, 0.9)), url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1720&q=80');
-            background-size: cover;
-            background-position: center;
-            padding: 80px 0;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-        }
-        
-        .aisle-card {
-            transition: transform 0.3s;
-            border: none;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .aisle-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .btn-primary {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            font-weight: 600;
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--accent-color);
-            border-color: var(--accent-color);
-            transform: translateY(-2px);
-        }
-        
-        .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
-        }
-        
-        .input-group-text {
-            background-color: #f8f9fa;
-            border-color: #dee2e6;
-        }
-    </style>
+    
 </head>
 <body>
 

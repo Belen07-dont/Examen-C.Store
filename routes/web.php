@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\CrearUsuario;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
+use App\Models\Cart;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 
@@ -11,9 +14,12 @@ Route::get('/', function () {
 });
 
 Route::get('/productos', [ProductController::class, 'index'])->name('productos.index');
+Route::post(uri: '/cart', action: [CartController::class, 'getCartWithProducts']);
 
 Route::post(uri: '/guardar', action: [CrearUsuario::class, 'guardar']);
+
 Route::post(uri: '/logout', action: [CrearUsuario::class, 'logout']);
+
 Route::post(uri: '/login', action: [CrearUsuario::class, 'login']);
 
 //posts para productos

@@ -27,7 +27,6 @@ class PostController extends Controller
 
         $productos['name'] = strip_tags($productos['name']);
         $productos['description'] = strip_tags($productos['description']);
-        $productos['admin_id'] = Auth::id();
 
         Product::create($productos);
         return redirect('/');

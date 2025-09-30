@@ -43,141 +43,143 @@
     </nav>
 
     <div class="container my-5">
-        <div class="row">
-            <div class="col-12">
-                <div class="cart-container">
-                    <!-- Header del Carrito -->
-                    <div class="cart-header">
-                        <h2 class="mb-0">
-                            <i class="fas fa-shopping-cart me-2"></i>Mi Carrito de Compras
-                        </h2>
-                    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="cart-container">
+                <!-- Header del Carrito -->
+                <div class="cart-header">
+                    <h2 class="mb-0">
+                        <i class="fas fa-shopping-cart me-2"></i>Mi Carrito de Compras
+                    </h2>
+                </div>
 
-                    <!-- Tabla del Carrito -->
-                    <div class="table-responsive">
-                        <table class="cart-table">
-                            <thead>
-                                <tr>
-                                    <th>Producto</th>
-                                    <th>Precio</th>
-                                    <th>Cantidad</th>
-                                    <th>Subtotal</th>
-                                    <th>Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Ejemplo de producto en el carrito -->
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
-                                                 alt="Snacks Variados" class="product-image me-3">
-                                            <div>
-                                                <h6 class="mb-1">Snacks Variados</h6>
-                                                <small class="text-muted">Mezcla de snacks y papas fritas</small>
+                <!-- Tabla del Carrito -->
+                <div class="table-responsive">
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Producto</th>
+                                <th>Descripción</th>
+                                <th>Imagen</th>
+                                <th>Cantidad</th>
+                                <th>Precio Unitario</th>
+                                <th>Subtotal</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($cartItems as $item)
+                            <tr>
+                                <td><strong>#{{ $item->id }}</strong></td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        @if($item->image)
+                                            <img src="{{ asset('img/' . $item->image) }}" 
+                                                 alt="{{ $item->name }}" class="product-image me-3">
+                                        @else
+                                            <div class="product-image me-3 bg-light d-flex align-items-center justify-content-center">
+                                                <i class="fas fa-image text-muted"></i>
                                             </div>
+                                        @endif
+                                        <div>
+                                            <h6 class="mb-1">{{ $item->name }}</h6>
+                                            <small class="text-muted">Product ID: {{ $item->product_id }}</small>
                                         </div>
-                                    </td>
-                                    <td class="price">$5.99</td>
-                                    <td>
-                                        <div class="quantity-control">
-                                            <button class="quantity-btn">-</button>
-                                            <input type="number" class="quantity-input" value="2" min="1">
-                                            <button class="quantity-btn">+</button>
-                                        </div>
-                                    </td>
-                                    <td class="subtotal">$11.98</td>
-                                    <td>
-                                        <button class="remove-btn" title="Eliminar producto">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                                <td>
+                                    <small class="text-muted">{{ $item->description }}</small>
+                                </td>
+                                <td>
+                                    @if($item->image)
+                                        <small>{{ $item->image }}</small>
+                                    @else
+                                        <small class="text-muted">Sin imagen</small>
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="quantity-control">
+                                        <button class="quantity-btn" data-id="{{ $item->id }}" data-action="decrease">-</button>
+                                        <input type="number" class="quantity-input" value="{{ $item->quantity }}" min="1" data-id="{{ $item->id }}">
+                                        <button class="quantity-btn" data-id="{{ $item->id }}" data-action="increase">+</button>
+                                    </div>
+                                </td>
+                                <td class="price">${{ number_format($item->price, 2) }}</td>
+                                <td class="subtotal">${{ number_format($item->subtotal, 2) }}</td>
+                                <td>
+                                    <button class="remove-btn" title="Eliminar producto" data-id="{{ $item->id }}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            @endforeach
 
-                                <!-- Segundo producto de ejemplo -->
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
-                                                 alt="Refrescos" class="product-image me-3">
-                                            <div>
-                                                <h6 class="mb-1">Refrescos Variados</h6>
-                                                <small class="text-muted">Pack de 6 bebidas diferentes</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="price">$8.50</td>
-                                    <td>
-                                        <div class="quantity-control">
-                                            <button class="quantity-btn">-</button>
-                                            <input type="number" class="quantity-input" value="1" min="1">
-                                            <button class="quantity-btn">+</button>
-                                        </div>
-                                    </td>
-                                    <td class="subtotal">$8.50</td>
-                                    <td>
-                                        <button class="remove-btn" title="Eliminar producto">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                            @if($cartItems->isEmpty())
+                            <tr>
+                                <td colspan="8" class="text-center py-4">
+                                    <div class="empty-cart">
+                                        <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                                        <h4>Tu carrito está vacío</h4>
+                                        <p class="text-muted">Agrega algunos productos para continuar</p>
+                                        <a href="{{ url('/productos') }}" class="btn btn-primary">
+                                            <i class="fas fa-store me-2"></i>Ir a Productos
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
 
-                    <!-- Resumen del Carrito -->
-                    <div class="cart-summary">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="summary-row">
-                                    <span>Subtotal:</span>
-                                    <span>$20.48</span>
-                                </div>
-                                <div class="summary-row">
-                                    <span>Envío:</span>
-                                    <span>$2.99</span>
-                                </div>
-                                <div class="summary-row">
-                                    <span>Impuestos:</span>
-                                    <span>$1.84</span>
-                                </div>
-                                <div class="summary-row total-row">
-                                    <span>Total:</span>
-                                    <span>$25.31</span>
-                                </div>
-                                
-                                <button class="btn btn-checkout">
-                                    <i class="fas fa-credit-card me-2"></i>Proceder al Pago
-                                </button>
+                @if(!$cartItems->isEmpty())
+                <!-- Resumen del Carrito -->
+                <div class="cart-summary">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @php
+                                $subtotal = $cartItems->sum('subtotal');
+                                $shipping = 2.99;
+                                $tax = $subtotal * 0.08; // 8% tax
+                                $total = $subtotal + $shipping + $tax;
+                            @endphp
+                            <div class="summary-row">
+                                <span>Subtotal:</span>
+                                <span>${{ number_format($subtotal, 2) }}</span>
                             </div>
-                            <div class="col-md-6 text-end">
-                                <a href="{{ url('/productos') }}" class="btn btn-outline-primary me-2">
-                                    <i class="fas fa-arrow-left me-2"></i>Seguir Comprando
-                                </a>
-                                <button class="btn btn-outline-danger">
-                                    <i class="fas fa-trash me-2"></i>Vaciar Carrito
-                                </button>
+                            <div class="summary-row">
+                                <span>Envío:</span>
+                                <span>${{ number_format($shipping, 2) }}</span>
                             </div>
+                            <div class="summary-row">
+                                <span>Impuestos (8%):</span>
+                                <span>${{ number_format($tax, 2) }}</span>
+                            </div>
+                            <div class="summary-row total-row">
+                                <span>Total:</span>
+                                <span>${{ number_format($total, 2) }}</span>
+                            </div>
+                            
+                            <button class="btn btn-checkout">
+                                <i class="fas fa-credit-card me-2"></i>Proceder al Pago
+                            </button>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <a href="{{ url('/productos') }}" class="btn btn-outline-primary me-2">
+                                <i class="fas fa-arrow-left me-2"></i>Seguir Comprando
+                            </a>
+                            <button class="btn btn-outline-danger" id="clearCart">
+                                <i class="fas fa-trash me-2"></i>Vaciar Carrito
+                            </button>
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>
-
-    <!-- Estado del Carrito Vacío (comentado) -->
-    <!--
-    <div class="container my-5">
-        <div class="empty-cart">
-            <i class="fas fa-shopping-cart"></i>
-            <h3>Tu carrito está vacío</h3>
-            <p>¡Descubre nuestros productos y añade algunos a tu carrito!</p>
-            <a href="{{ url('/productos') }}" class="btn btn-primary mt-3">
-                <i class="fas fa-store me-2"></i>Ir a Productos
-            </a>
-        </div>
-    </div>
-    -->
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

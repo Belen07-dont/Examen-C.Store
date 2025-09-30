@@ -13,7 +13,35 @@
     
 </head>
 <body>
-    
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url('/') }}">
+                <i class="fas fa-store me-2"></i>C Store
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url('/index') }}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/') }}">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/pedidos') }}">Pedidos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/carrito') }}">Carrito</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/perfil') }}">Perfil</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     @auth
         @if(auth()->id() === 8) {{-- Replace 8 with your specific user ID --}}
             <div class="form-container">
@@ -105,10 +133,85 @@
                 </button>
             </form>
         </div>
-    </div>
             </div>
-        @endif
-    
+            </div>
+        @else
+        <div class="form-container" style="margin: 2.5rem; ">
+        <div class="form-header" style="">
+            <h2>Nuestros Productos</h2>
+            <p>Explora nuestra amplia selección organizada por categorías</p>
+        </div>    
+        <div class="form-body" style=" background-color: #5d607c;">
+            @if(isset($productsByCategory) && $productsByCategory->count())
+                @foreach($productsByCategory as $category => $products)
+                <div class="category-section">
+                    <h2 style="color: white;" class="category-title">{{ $category ?: 'Sin Categoría' }}</h2>
+                    <div class="products-grid">
+                        @foreach($products as $product)
+                            <div class="product-card">
+                                <div class="product-image-container">
+                                    <img src="{{ asset('img/' . $product->image) }}" alt="{{ $product->name }}" class="product-image">
+                                    <span class="category-badge">{{ $category }}</span>
+                                </div>
+                                <div class="product-content">
+                                    <h3 class="product-name">{{ $product->name }}</h3>
+                                    <p class="product-description">{{ Str::limit($product->description, 100) }}</p>
+                                    <div class="product-footer">
+                                        <p class="price">${{ number_format($product->price, 2) }}</p>
+                                         <button class="btn btn-primary btn-sm add-to-cart-btn"
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#addToCartModal"
+                                                data-product-id="{{ $product->id }}"
+                                                data-product-name="{{ $product->name }}"
+                                                data-product-price="{{ $product->price }}"
+                                                data-product-image="{{ asset('storage/' . $product->image) }}">
+                                            <i class="fas fa-cart-plus"></i> Add to Cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <div class="modal fade" id="addToCartModal" tabindex="-1" aria-labelledby="addToCartModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addToCartModalLabel">Add to Cart</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="text-center">
+                                            <img id="modalProductImage" src="" alt="" class="img-fluid mb-3" style="max-height: 150px;">
+                                            <h4 id="modalProductName"></h4>
+                                            <p class="price" id="modalProductPrice"></p>
+                                        </div>
+                                        <form action="{{route('cart')}}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="product_id" id="modalProductId">
+                                            <div class="mb-3">
+                                                <label for="quantity" class="form-label">Quantity:</label>
+                                                <input type="number" name="quantity" class="form-control" value="1" min="1">
+                                            </div>
+                                            <button type="" class="btn btn-success w-100">
+                                                <i class="fas fa-cart-plus"></i> Add to Cart
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            @else
+                <div class="empty-cart">
+                    <i class="fas fa-box-open"></i>
+                    <h3>No hay productos disponibles</h3>
+                    <p>No se encontraron productos en esta categoría.</p>
+                </div>
+            @endif
+        </div>
+        @endif   
     @else
     <div class="form-container" style="margin: 2.5rem; ">
         <div class="form-header" style="">
@@ -159,14 +262,14 @@
                                             <h4 id="modalProductName"></h4>
                                             <p class="price" id="modalProductPrice"></p>
                                         </div>
-                                        <form action="" method="POST">
+                                        <form action="{{route('cart')}}" method="POST">
                                             @csrf
                                             <input type="hidden" name="product_id" id="modalProductId">
                                             <div class="mb-3">
                                                 <label for="quantity" class="form-label">Quantity:</label>
                                                 <input type="number" name="quantity" class="form-control" value="1" min="1">
                                             </div>
-                                            <button type="submit" class="btn btn-success w-100">
+                                            <button type="" class="btn btn-success w-100">
                                                 <i class="fas fa-cart-plus"></i> Add to Cart
                                             </button>
                                         </form>

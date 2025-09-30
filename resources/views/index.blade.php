@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
 </head>
-<body>
+<body style="background-color: rgba(236, 236, 236, 0.849)">
   
    <!-- Authentication Status Banner -->
 <div class="auth-status-banner">
@@ -69,7 +69,7 @@
     </div>
 
     <!-- Información de la Tienda -->
-    <div class="container">
+    <div class="container" >
         <div class="row">
             <div class="col-md-8 mx-auto">
                 <div class="promo-banner">
@@ -237,7 +237,7 @@
     </section>
 
     <!-- Sección de Contacto -->
-    <section class="py-5 bg-light">
+    <section class="py-5 " style="background-color: rgba(236, 236, 236, 0.849)">
         <div class="container">
             <h2 class="section-title text-center">Visítanos</h2>
             <div class="row">
@@ -264,15 +264,15 @@
                             <form>
                                 <div class="mb-3">
                                     <label for="nombre" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre" required>
+                                    <input type="text" class="form-control" id="nombre" style="background-color: rgba(236, 236, 236, 0.849)" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Correo Electrónico</label>
-                                    <input type="email" class="form-control" id="email" required>
+                                    <input type="email" class="form-control" id="email" style="background-color: rgba(236, 236, 236, 0.849)" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="mensaje" class="form-label">Mensaje</label>
-                                    <textarea class="form-control" id="mensaje" rows="5" required></textarea>
+                                    <textarea class="form-control" id="mensaje" rows="5" style="background-color: rgba(236, 236, 236, 0.849)" required></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
                             </form>

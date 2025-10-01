@@ -52,26 +52,25 @@
                         <i class="fas fa-shopping-cart me-2"></i>Mi Carrito de Compras
                     </h2>
                 </div>
-
                 <!-- Tabla del Carrito -->
                 <div class="table-responsive">
                     <table class="cart-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Producto</th>
                                 <th>Descripción</th>
-                                <th>Imagen</th>
                                 <th>Cantidad</th>
                                 <th>Precio Unitario</th>
                                 <th>Subtotal</th>
-                                <th>Acciones</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php
+                                use App\Models\Cart;
+                                $cartItems= Cart::where('user_id', Auth::id())->get();?>
                             @foreach($cartItems as $item)
                             <tr>
-                                <td><strong>#{{ $item->id }}</strong></td>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         @if($item->image)
@@ -84,7 +83,6 @@
                                         @endif
                                         <div>
                                             <h6 class="mb-1">{{ $item->name }}</h6>
-                                            <small class="text-muted">Product ID: {{ $item->product_id }}</small>
                                         </div>
                                     </div>
                                 </td>
@@ -92,25 +90,20 @@
                                     <small class="text-muted">{{ $item->description }}</small>
                                 </td>
                                 <td>
-                                    @if($item->image)
-                                        <small>{{ $item->image }}</small>
-                                    @else
-                                        <small class="text-muted">Sin imagen</small>
-                                    @endif
-                                </td>
-                                <td>
                                     <div class="quantity-control">
-                                        <button class="quantity-btn" data-id="{{ $item->id }}" data-action="decrease">-</button>
-                                        <input type="number" class="quantity-input" value="{{ $item->quantity }}" min="1" data-id="{{ $item->id }}">
-                                        <button class="quantity-btn" data-id="{{ $item->id }}" data-action="increase">+</button>
+                                        <input type="text" class="quantity-input" value="{{ $item->quantity }}" min="1" data-id="{{ $item->id }}" disabled>
                                     </div>
                                 </td>
                                 <td class="price">${{ number_format($item->price, 2) }}</td>
                                 <td class="subtotal">${{ number_format($item->subtotal, 2) }}</td>
                                 <td>
-                                    <button class="remove-btn" title="Eliminar producto" data-id="{{ $item->id }}">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
+                                   <form action="{{ route('cart.remove', $item->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-outline-danger" onclick="return confirm('¿Estás seguro?')">
+                                            <i class="fas fa-trash me-2"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach
@@ -132,16 +125,14 @@
                         </tbody>
                     </table>
                 </div>
-
                 @if(!$cartItems->isEmpty())
-                <!-- Resumen del Carrito -->
                 <div class="cart-summary">
                     <div class="row">
                         <div class="col-md-6">
                             @php
                                 $subtotal = $cartItems->sum('subtotal');
-                                $shipping = 2.99;
-                                $tax = $subtotal * 0.08; // 8% tax
+                                $shipping = $subtotal * 0.02;
+                                $tax = $subtotal * 0.15; // 15% tax
                                 $total = $subtotal + $shipping + $tax;
                             @endphp
                             <div class="summary-row">
@@ -153,25 +144,32 @@
                                 <span>${{ number_format($shipping, 2) }}</span>
                             </div>
                             <div class="summary-row">
-                                <span>Impuestos (8%):</span>
+                                <span>Impuestos (15%):</span>
                                 <span>${{ number_format($tax, 2) }}</span>
                             </div>
                             <div class="summary-row total-row">
                                 <span>Total:</span>
                                 <span>${{ number_format($total, 2) }}</span>
                             </div>
-                            
-                            <button class="btn btn-checkout">
+                            <form action="{{ route('checkout.pay') }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                            <button class="btn btn-outline-primary btn-checkout">
                                 <i class="fas fa-credit-card me-2"></i>Proceder al Pago
                             </button>
+                            </form>
                         </div>
                         <div class="col-md-6 text-end">
                             <a href="{{ url('/productos') }}" class="btn btn-outline-primary me-2">
                                 <i class="fas fa-arrow-left me-2"></i>Seguir Comprando
                             </a>
-                            <button class="btn btn-outline-danger" id="clearCart">
-                                <i class="fas fa-trash me-2"></i>Vaciar Carrito
-                            </button>
+                            <form action="{{ route('cart.clear') }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-outline-danger" onclick="return confirm('¿Estás seguro?')">
+                                    <i class="fas fa-trash me-2"></i>Vaciar Carrito
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

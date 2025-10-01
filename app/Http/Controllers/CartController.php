@@ -31,11 +31,11 @@ class CartController extends Controller
             'subtotal' => $product->price * ($existingCartItem->quantity + $request->quantity)
         ]);
 
-        $cartItem = $existingCartItem;
-        $message = 'Product quantity updated in cart!';
     } else {
+        $cartItems = $existingCartItem;
+        $message = 'Product quantity updated in cart!';
         // Create new cart item
-        $cartItem = Cart::create([
+        $cartItems = Cart::create([
             'product_id' => $request->product_id,
             'name' => $product->name,
             'description' => $product->description,
@@ -56,4 +56,18 @@ class CartController extends Controller
         
         return view('/carrito', compact('cartItems'));
     }
+
+     public function destroy($id)
+    {
+        
+        Cart::findOrFail($id)->delete();
+        return view('/carrito');
+    }
+
+    
+
+  public function clearCart()
+  {Cart::where('user_id', Auth::id())->delete();
+              return view('/carrito');
+  }
 }

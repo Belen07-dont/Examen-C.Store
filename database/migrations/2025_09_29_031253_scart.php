@@ -13,19 +13,19 @@ return new class extends Migration
     {
        Schema::create('cart', function(Blueprint $table){
     $table->id();
-    $table->foreignId('product_id')->constrained('products'); // ✅ Singular, specify table
-    $table->string('name'); // ✅ Changed from longText to string
+    $table->foreignId('product_id')->constrained('products'); 
+    $table->string('name'); 
     $table->longText('description');
     $table->string('image')->nullable();
-    $table->integer('quantity'); // ✅ Changed from string to integer
-    $table->decimal('price', 8, 2); // ✅ Changed from string to decimal
-    $table->decimal('subtotal', 10, 2); // ✅ Changed from string to decimal, better name
-    $table->foreignId('user_id')->constrained('users'); // ✅ Specify table
+    $table->integer('quantity'); // 
+    $table->decimal('price', 8, 2); 
+    $table->decimal('subtotal', 10, 2); 
+    $table->foreignId('user_id')->constrained('users');
     $table->timestamps();
     
-    // Prevent duplicate products for same user
+    // Revisar id de productos repetidos en usuario Admin
     $table->unique(['product_id', 'user_id']);
-});
+    });
 }
     
 

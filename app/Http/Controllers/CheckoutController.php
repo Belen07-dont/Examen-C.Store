@@ -100,18 +100,7 @@ class CheckoutController extends Controller
         Log::info("Final pedidos: $finalPedidoCount, Items: $finalPedidoItemsCount");
         Log::info("=== CHECKOUT COMPLETE ===");
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Order placed successfully!',
-            'order_id' => $pedido->id,
-            'order_total' => $total,
-            'items_count' => $finalPedidoItemsCount,
-            'debug' => [
-                'pedidos_count' => $finalPedidoCount,
-                'pedido_items_count' => $finalPedidoItemsCount,
-                'cart_items_deleted' => $deletedCount
-            ]
-        ]);
+        return view('/carrito');
 
     } catch (Exception $e) {
         Log::error("Checkout error: " . $e->getMessage());

@@ -214,36 +214,6 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                <i class="fas fa-store me-2"></i>C Store
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ url('/') }}">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/productos') }}">Productos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/pedidos') }}">Pedidos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/carrito') }}">Carrito</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/perfil') }}">Perfil</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!-- Auth Status Banner -->
     <div class="auth-status-banner">
         @auth
             <div class="auth-success">
@@ -251,7 +221,7 @@
                 ¡Bienvenido de vuelta, {{ auth()->user()->name }}!
             </div>
 
-            <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
                 <i class="fas fa-store me-2"></i>C Store
@@ -271,6 +241,9 @@
                         <a class="nav-link" href="{{ url('/pedidos') }}">Pedidos</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link " href="{{ url('/carrito') }}">Carrito</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link active" href="{{ url('/perfil') }}">Perfil</a>
                     </li>
                     <li class="nav-item">
@@ -286,104 +259,98 @@
         </div>
     </nav>
 
-    <!-- Profile Hero Section -->
     <div class="profile-hero">
         <div class="container">
             <div class="profile-avatar">
-                <i class="fas fa-user "></i>
+                <i class="fas fa-user " style="font-size: 4rem"></i>
             </div>
             <h1 class="display-5 fw-bold">Perfil de {{ auth()->user()->name}}</h1>
             <p class="lead">Miembro de C.Store desde {{ auth()->user()->created_at->format('F Y') }}</p>
         </div>
     </div>
 
-    <!-- Profile Content -->
     <div class="container">
-        <div class="row">
-            <!-- Left Column - User Info -->
-            <div class="col-lg-8">
-                <!-- Personal Information Card -->
-                <div class="profile-card">
-                    <div class="profile-card-header">
-                        <i class="fas fa-user-circle me-2"></i>Información Personal
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="profile-info-item">
-                            <span class="info-label">Nombre:</span>
-                            <span class="info-value">{{ auth()->user()->name }}</span>
-                        </div>
-                        <div class="profile-info-item">
-                            <span class="info-label">Email:</span>
-                            <span class="info-value">{{ auth()->user()->email }}</span>
-                        </div>
-                        <div class="profile-info-item">
-                            <span class="info-label">Miembro desde:</span>
-                            <span class="info-value">{{ auth()->user()->created_at->format('d/m/Y') }}</span>
-                        </div>
-                        <div class="profile-info-item">
-                            <span class="info-label">Última actualización:</span>
-                            <span class="info-value">{{ auth()->user()->updated_at->format('d/m/Y') }}</span>
-                        </div>
-                    </div>
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="profile-card">
+                <div class="profile-card-header">
+                    <i class="fas fa-user-circle me-2"></i>Información Personal
                 </div>
-
-                <!-- Recent Activity -->
-                <div class="profile-card mt-4">
-                    <div class="profile-card-header">
-                        <i class="fas fa-history me-2"></i>Actividad Reciente
+                <div class="card-body py-2" style="text-align: start; font-size: large">
+                    <div class="profile-info-item">
+                        <span class="info-label" >Nombre:</span>
+                        <span class="info-value">{{ auth()->user()->name }}</span>
                     </div>
-                    <div class="card-body">
-                        <ul class="recent-activity">
-                            <li class="activity-item">
-                                <div class="fw-semibold">Sesión iniciada</div>
-                                <div class="activity-time">Hoy a las {{ now()->format('H:i') }}</div>
-                            </li>
-                            <li class="activity-item">
-                                <div class="fw-semibold">Perfil visitado</div>
-                                <div class="activity-time">Última vez: {{ now()->subDays(2)->format('d/m/Y') }}</div>
-                            </li>
-                            <li class="activity-item">
-                                <div class="fw-semibold">Configuración actualizada</div>
-                                <div class="activity-time">Hace 1 semana</div>
-                            </li>
-                        </ul>
+                    <div class="profile-info-item">
+                        <span class="info-label" >Email:</span>
+                        <span class="info-value">{{ auth()->user()->email }}</span>
+                    </div>
+                    <div class="profile-info-item">
+                        <span class="info-label" >Miembro desde:</span>
+                        <span class="info-value">{{ auth()->user()->created_at->format('d/m/Y') }}</span>
+                    </div>
+                    <div class="profile-info-item">
+                        <span class="info-label" >Última actualización:</span>
+                        <span class="info-value">{{ auth()->user()->updated_at->format('d/m/Y') }}</span>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Right Column - Stats & Actions -->
-            <div class="col-lg-4">
-                <!-- Quick Stats -->
-                <div class="stats-card mb-4">
-                    <div class="stats-number">0</div>
-                    <div class="stats-label">Pedidos Realizados</div>
+        <!-- Recent Activity -->
+        <div class="col-lg-4">
+            <div class="profile-card">
+                <div class="profile-card-header">
+                    <i class="fas fa-history me-2"></i>Actividad Reciente
                 </div>
-                
-                <div class="stats-card mb-4">
-                    <div class="stats-number">0</div>
-                    <div class="stats-label">Productos en carrito</div>
+                <div class="card-body p-0">
+                    <ul class="recent-activity">
+                        <li class="activity-item">
+                            <div class="fw-semibold">Sesión iniciada</div>
+                            <div class="activity-time">Hoy a las {{ now()->format('H:i') }}</div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="fw-semibold">Perfil visitado</div>
+                            <div class="activity-time">Última vez: {{ now()->subDays(0)->format('d/m/Y') }}</div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="fw-semibold">Configuración actualizada</div>
+                            <div class="activity-time">Hace 1 semana</div>
+                        </li>
+                    </ul>
                 </div>
-                
+            </div>
+        </div>
 
-                <!-- Quick Actions -->
-                <div class="profile-card">
-                    <div class="profile-card-header">
-                        <i class="fas fa-bolt me-2"></i>Acciones Rápidas
-                    </div>
-                    <div class="card-body">
-                        <div class="d-grid gap-2">
-                            <button class="btn btn-edit">
-                                <i class="fas fa-edit me-2"></i>Editar Perfil
-                            </button>
-                            <button class="btn btn-outline-primary">
-                                <i class="fas fa-shopping-bag me-2"></i>Mis Pedidos
-                            </button>
-                        </div>
+        <div class="col-lg-3">
+            <div class="stats-card mb-3" style="padding-top: 2rem; ">
+                <div class="stats-number">0</div>
+                <div class="stats-label">Pedidos Realizados</div>
+            </div>
+            <div class="stats-card mb-3" style="padding-top: 2rem; ">
+                <div class="stats-number">0</div>
+                <div class="stats-label">Productos en carrito</div>
+            </div>
+            <div class="profile-card">
+                <div class="profile-card-header">
+                    <i class="fas fa-bolt me-2"></i>Acciones Rápidas
+                </div>
+                <div class="card-body">
+                    <div class="d-grid ">
+                        <button class="btn btn-edit">
+                            <i class="fas fa-edit me-2"></i>Editar Perfil
+                        </button>
+                        <button class="btn btn-outline-primary">
+                            <a href="{{url('/pedidos')}}" style="font-weight: bold; text-decoration: none;" class="pedidos">
+                                <i class="fa fa-shopping-bag"></i> Mis pedidos
+                            </a>
+                        </button>   
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
         @else
             <div class="auth-warning">
                 <i class="fas fa-exclamation-circle me-2"></i>
@@ -392,10 +359,6 @@
         @endauth
     </div>
 
-    <!-- Navigation -->
-    
-
-    <!-- Footer -->
     <footer class="footer mt-5">
         <div class="container">
             <div class="row">
@@ -416,7 +379,6 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

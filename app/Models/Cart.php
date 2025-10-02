@@ -19,4 +19,19 @@ class Cart extends Model
         'subtotal',
         'user_id'
     ];
+
+        public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function Check()
+    {
+        return $this->hasMany(Checkout::class);
+    }
 }

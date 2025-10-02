@@ -31,11 +31,12 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('login');
 });
-
+Route::get('/pedidos', function () {
+    return view('pedidos');
+});
 Route::get('/perfil', function () {
     return view('perfil');
 });
-
 Route::get('/signin', function () {
     return view('sign');
 });
@@ -51,4 +52,5 @@ Route::get('/carrito', function () {
 });
 
 
-Route::post('/checkout', [CheckoutController::class, 'pay'])->name('checkout.pay');
+Route::post('/checkout', [CheckoutController::class, 'processCheckout'])->name('checkout.pay');
+

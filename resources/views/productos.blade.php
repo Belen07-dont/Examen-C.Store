@@ -43,10 +43,10 @@
         </div>
     </nav>
     @auth
-        @if(auth()->id() === 8) {{-- Replace 8 with your specific user ID --}}
-            <div class="form-container">
+        @if(auth()->id() === 1)
+            <div class="form-container" style="margin-top: 2rem">
         <div class="form-header">
-            <h2><i class="fas fa-plus-circle me-2"></i>Agregar Nuevo Producto</h2>
+            <h2><i class="fas fa-plus-circle me-2 "></i>Agregar Nuevo Producto</h2>
             <p>Completa la información del producto que deseas agregar al catálogo</p>
         </div>
         
